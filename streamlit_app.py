@@ -3,6 +3,8 @@ import streamlit as st
 # from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 
+
+
 # Set app title with smoothie emojis
 st.title("🥤Customize Your Smoothie!🥤")
 
@@ -43,6 +45,10 @@ if ingredients_list:
 
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order)
                     values ('""" + ingredients_string + """','"""+name_on_order+"""')"""
+
+    import requests  
+    smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
+    st.text(smoothiefroot_response)
 
     
     # st.write(my_insert_stmt)
