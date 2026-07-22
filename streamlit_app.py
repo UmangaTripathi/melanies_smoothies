@@ -18,7 +18,7 @@ name_on_order = st.text_input('Name on Smoothie:')
 st.write( 'The name on your Smoothie will be:', name_on_order)
 
 # Active session handling
-session = get_active_session()
+# session = get_active_session()
 
 # Pull the fruit options dataframe
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
