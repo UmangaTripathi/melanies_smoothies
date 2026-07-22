@@ -10,24 +10,22 @@ st.title("🥤Customize Your Smoothie!🥤")
 # Add the subheader instruction text
 st.write("""Choose the fruits you want in your custom Smoothie!""")
 
-# Connect to Snowflake on Streamlit Cloud
 cnx = st.connection("snowflake")
 session = cnx.session()
 
-# User input for name on smoothie
 name_on_order = st.text_input('Name on Smoothie:')
 st.write('The name on your Smoothie will be:', name_on_order)
 
 # Pull the fruit options dataframe including FRUIT_NAME and SEARCH_ON columns
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
 
-# Convert the Snowpark Dataframe to a Pandas Dataframe to use the LOC function
+# Convert the Snowpark Dataframe to a Pandas Dataframe
 pd_df = my_dataframe.to_pandas()
 
-# Multiselect widget for selecting up to 5 fruits
+# FIX: Pass pd_df['FRUIT_NAME'] to multiselect so options are clean strings
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:',
-    my_dataframe,
+    pd_df['FRUIT_NAME'],
     max_selections=5
 )
 
