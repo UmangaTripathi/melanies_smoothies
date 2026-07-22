@@ -8,11 +8,15 @@ from snowflake.snowpark.functions import col
 st.title("🥤Customize Your Smoothie!🥤")
 
 # Add the subheader instruction text
-st.write("""Choose the fruits you want in your custom Smoothie!""")
+st.write(
+    """Choose the fruits you want in your custom Smoothie!"""
+)
 
+# Connect to Snowflake on Streamlit Cloud / external host
 cnx = st.connection("snowflake")
 session = cnx.session()
 
+# User input for name on smoothie
 name_on_order = st.text_input('Name on Smoothie:')
 st.write('The name on your Smoothie will be:', name_on_order)
 
@@ -22,7 +26,7 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 # Convert the Snowpark Dataframe to a Pandas Dataframe
 pd_df = my_dataframe.to_pandas()
 
-# FIX: Pass pd_df['FRUIT_NAME'] to multiselect so options are clean strings
+# Pass pd_df['FRUIT_NAME'] so options are clean strings
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:',
     pd_df['FRUIT_NAME'],
